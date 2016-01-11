@@ -8,7 +8,25 @@ describe DockingStation do
   it { should respond_to(:release_bike) }
 
   it 'can release working bikes' do
-    bike = docking_station.release_bike
-    expect(bike).to be_working
+
+    docking_station.dock(bike)
+    docking_station.release_bike
+    expect(docking_station.bikes).not_to include bike
+  end
+
+  it 'a bike can be docked' do
+    docking_station.dock(bike)
+    expect(docking_station.bikes).to include(bike)
+  end
+
+  it 'raises and error if station is empty' do
+    error = 'Sorry no bikes available'
+    expect {docking_station.release_bike}.to raise_error error
+  end
+
+  it 'doesn\'t allow docking of bikes once full' do
+    20.times { docking_station.dock(bike) }
+    error = 'Docking station full'
+    expect{ docking_station.dock(bike) }.to raise_error error
   end
 end

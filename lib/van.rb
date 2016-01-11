@@ -1,7 +1,8 @@
 class Van
-  attr_reader :broken_bikes
+  attr_reader :broken_bikes, :fixed_bikes
   def initialize
     @broken_bikes = []
+    @fixed_bikes = []
   end
 
   def collect(docking_station)
@@ -15,5 +16,9 @@ class Van
     broken_bikes.each { |bike| released_bikes << bike }
     broken_bikes.each { |bike| broken_bikes.delete(bike) }
     released_bikes
+  end
+
+  def collect_fixed(garage)
+    garage.release_fixed_bikes.each {|bike| fixed_bikes << bike}
   end
 end

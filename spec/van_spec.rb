@@ -4,6 +4,7 @@ describe Van do
   let(:van) { described_class.new }
   let(:docking_station) { double(:docking_station) }
   let(:bike) { double(:bike) }
+  let(:garage) { double(:garage) }
 
   it 'is empty by default' do
     expect(van.broken_bikes).to be_empty
@@ -26,5 +27,11 @@ describe Van do
     van.collect(docking_station)
     van.release_broken_bikes
     expect(van.broken_bikes).to be_empty
+  end
+
+  it 'collects fixed bikes from garage' do
+    allow(garage).to receive(:release_fixed_bikes).and_return([bike])
+    van.collect_fixed(garage)
+    expect(van.fixed_bikes).to include(bike)
   end
 end

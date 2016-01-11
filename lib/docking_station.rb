@@ -1,3 +1,4 @@
+require_relative 'bike'
 class DockingStation
   attr_reader :bikes
   attr_accessor :capacity
@@ -10,6 +11,7 @@ class DockingStation
 
   def release_bike
     fail 'Sorry, no bikes available.' if empty?
+    fail 'Can\'t release broken bike' unless @bikes.last.working?
     bikes.pop
   end
 

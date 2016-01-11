@@ -4,9 +4,9 @@ describe DockingStation do
   let(:docking_station) { described_class.new }
   let(:bike) { double(:bike) }
 
-  it { should respond_to(:release_bike) }
 
   it 'can release working bikes' do
+    allow(bike).to receive(:working?).and_return true
     docking_station.dock(bike)
     docking_station.release_bike
     expect(docking_station.bikes).not_to include bike
@@ -37,5 +37,12 @@ describe DockingStation do
     error = 'Sorry, docking station is full.'
     docking_station_2.capacity.times { docking_station_2.dock(bike) }
     expect { docking_station_2.dock(bike) }.to raise_error error
+  end
+
+  it 'doesn\'t release a broken bike' do
+    allow(bike).to receive(:working?).and_return false
+    error = 'Can\'t release broken bike'
+    docking_station.dock(bike)
+    expect { docking_station.release_bike }.to raise_error error
   end
 end

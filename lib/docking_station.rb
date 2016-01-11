@@ -1,4 +1,3 @@
-require_relative 'bike'
 class DockingStation
   attr_reader :bikes
   attr_accessor :capacity
@@ -18,6 +17,13 @@ class DockingStation
   def dock(bike)
     fail 'Sorry, docking station is full.' if full?
     bikes << bike
+  end
+
+  def release_broken_bikes
+    released_bikes = []
+    bikes.each { |bike| released_bikes << bike unless bike.working? }
+    bikes.each { |bike| bikes.delete(bike) unless bike.working? }
+    released_bikes
   end
 
   private

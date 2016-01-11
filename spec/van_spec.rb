@@ -14,4 +14,17 @@ describe Van do
     van.collect(docking_station)
     expect(van.broken_bikes).to include(bike)
   end
+
+  it 'can release broken bikes to the garage' do
+    allow(docking_station).to receive(:release_broken_bikes).and_return([bike])
+    van.collect(docking_station)
+    expect(van.release_broken_bikes).to include(bike)
+  end
+
+  it 'doesn\'t include broken bikes once released to the garage' do
+    allow(docking_station).to receive(:release_broken_bikes).and_return([bike])
+    van.collect(docking_station)
+    van.release_broken_bikes
+    expect(van.broken_bikes).to be_empty
+  end
 end

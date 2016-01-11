@@ -9,4 +9,11 @@ class Van
       @broken_bikes << broken_bike
     end
   end
+
+  def release_broken_bikes
+    released_bikes = []
+    broken_bikes.each { |bike| released_bikes << bike }
+    broken_bikes.each { |bike| broken_bikes.delete(bike) }
+    released_bikes
+  end
 end

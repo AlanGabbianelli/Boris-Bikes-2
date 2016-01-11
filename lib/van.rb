@@ -19,6 +19,13 @@ class Van
   end
 
   def collect_fixed(garage)
-    garage.release_fixed_bikes.each {|bike| fixed_bikes << bike}
+    garage.release_fixed_bikes.each { |bike| fixed_bikes << bike }
+  end
+
+  def release_fixed_bikes
+    released_fixed_bikes = []
+    fixed_bikes.each { |bike| released_fixed_bikes << bike }
+    fixed_bikes.each { |bike| fixed_bikes.delete(bike) }
+    released_fixed_bikes
   end
 end

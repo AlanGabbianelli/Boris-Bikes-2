@@ -26,6 +26,10 @@ class DockingStation
     released_bikes
   end
 
+  def accept_fixed_bikes(van)
+    van.release_fixed_bikes.each { |bike| bikes << bike }
+  end
+
   private
 
   def full?

@@ -3,6 +3,7 @@ require 'docking_station'
 describe DockingStation do
   let(:docking_station) { described_class.new }
   let(:bike) { double(:bike) }
+  let(:van) { double(:van) }
 
   it 'can release working bikes' do
     allow(bike).to receive(:working?).and_return true
@@ -56,5 +57,11 @@ describe DockingStation do
     docking_station.dock(bike)
     docking_station.release_broken_bikes
     expect(docking_station.bikes).not_to include(bike)
+  end
+
+  it 'accepts fixed bikes from the van' do
+    allow(van).to receive(:release_fixed_bikes).and_return([bike])
+    docking_station.accept_fixed_bikes(van)
+    expect(docking_station.bikes).to include(bike)
   end
 end

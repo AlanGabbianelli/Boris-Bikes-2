@@ -11,13 +11,12 @@ class Garage
   end
 
   def repair
-    @broken_bikes.each {|bike| bike.fixme}
-    @broken_bikes.each {|bike| fixed_bikes << bike}
-    @broken_bikes.each {|bike| broken_bikes.delete(bike)}
+    @broken_bikes.each(&:fixme)
+    @broken_bikes.each { |bike| fixed_bikes << bike }
+    @broken_bikes.each { |bike| broken_bikes.delete(bike) }
   end
 
   def release_fixed_bikes
     fixed_bikes
   end
-
 end

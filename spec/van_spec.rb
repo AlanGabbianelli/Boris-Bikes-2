@@ -34,4 +34,17 @@ describe Van do
     van.collect_fixed(garage)
     expect(van.fixed_bikes).to include(bike)
   end
+
+  it 'can release fixed bikes to the docking station' do
+    allow(garage).to receive(:release_fixed_bikes).and_return([bike])
+    van.collect_fixed(garage)
+    expect(van.release_fixed_bikes).to include(bike)
+  end
+
+  it 'doesn\'t include fixed bikes once released to the docking station' do
+    allow(garage).to receive(:release_fixed_bikes).and_return([bike])
+    van.collect_fixed(garage)
+    van.release_fixed_bikes
+    expect(van.fixed_bikes).to be_empty
+  end
 end
